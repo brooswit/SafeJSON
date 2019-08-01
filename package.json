@@ -1,0 +1,9 @@
+{
+  "name": "safejson",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": "https://github.com/brooswit/SafeJSON",
+  "author": "Jay <jwinstead@launchdarkly.com>",
+  "license": "MIT"
+}
