@@ -4,6 +4,10 @@ class SafeJSON {
     this.useAsync = shouldUseAsync
   }
 
+  enableAsync() {
+    this.useAsync = true
+  }
+
   parse(json, optionalFallback = undefined, optionalCallback = undefined) {
     return (this.useAsync ? this.parseAsync : this.parseSync)(json, optionalFallback, optionalCallback)
   }
