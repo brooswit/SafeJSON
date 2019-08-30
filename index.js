@@ -1,24 +1,5 @@
-class SafeJSON {
-  useAsync
-  constructor(shouldUseAsync = false) {
-    this.useAsync = shouldUseAsync
-  }
-
-  enableAsync() {
-    this.useAsync = true
-  }
-
+const SafeJSON = {
   parse(json, optionalFallback = undefined, optionalCallback = undefined) {
-    return (this.useAsync ? this.parseAsync : this.parseSync)(json, optionalFallback, optionalCallback)
-  }
-  stringify(json, optionalCallback = undefined) {
-    return (this.useAsync ? this.stringifyAsync : this.stringifySync)(json, optionalCallback)
-  }
-  isValid(json, optionalCallback = undefined) {
-    return (this.useAsync ? this.isValidAsync : this.isValidSync)(json, optionalCallback)
-  }
-
-  parseSync(json, optionalFallback = undefined, optionalCallback = undefined) {
     let error = null
     let value = optionalFallback
     try {
@@ -28,8 +9,9 @@ class SafeJSON {
     }
     if (optionalCallback) optionalCallback(error, value)
     return value
-  }
-  stringifySync(value, optionalCallback = undefined) {
+  },
+
+  stringify(value, optionalCallback = undefined) {
     let error = null
     try {
       JSON.stringify(value)
@@ -37,8 +19,9 @@ class SafeJSON {
       error = ex
     }
     if (optionalCallback) optionalCallback(error)
-  }
-  isValidSync(json, optionalCallback = undefined) {
+  },
+
+  isValid(json, optionalCallback = undefined) {
     const token = {}
     const callbackHandler = !optionalCallback ? undefined : (error, json)=>{
       const valid = json !== token
@@ -47,16 +30,8 @@ class SafeJSON {
     const valid = this.parseSync(json, token, callbackHandler) !== token
     return valid
   }
-
-  async parseAsync(json, optionalFallback = undefined, optionalCallback = undefined) {
-    return this.parseSync(json, optionalFallback, optionalCallback)
-  }
-  async stringifyAsync(json, optionalCallback = undefined) {
-    return this.stringifySync(json, optionalCallback)
-  }
-  async isValidAsync(json, optionalCallback = undefined) {
-    return this.isValidSync(json, optionalCallback)
-  }
 }
 
-module.exports = SafeJSON = new SafeJSON()
+
+
+module.exports = SafeJSON
